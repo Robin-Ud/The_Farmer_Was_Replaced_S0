@@ -1,5 +1,5 @@
 import culturas_base 
-from game_defs import *
+from __builtins__ import *
 
 meta = 1
 while True:

@@ -1,4 +1,4 @@
-from game_defs import *
+from __builtins__ import *
 import mover
 import basic
 
