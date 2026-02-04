@@ -3,7 +3,7 @@ import basic
 
 meta = 1
 while True:
-    meta *= 2
+    meta *= 1.5
     quick_print(meta)
     basic.farmar("energia", meta)
     basic.farmar("trigo", meta)

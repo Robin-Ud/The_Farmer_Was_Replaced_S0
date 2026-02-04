@@ -11,12 +11,11 @@ def main_girassois():
     for i in range(get_world_size()):
         for j in range(get_world_size()):
             
-            while get_entity_type() != None and not can_harvest():
-                continue
-            if can_harvest():
-                can_harvest()
+            basic.esperar_crescer_e_colher()
+            
             basic.verificar_solo(Grounds.Soil)
             plant(Entities.Sunflower)
+            
             if measure() > 10:
                 use_item(Items.Water)
             petalas = measure()
@@ -74,4 +73,51 @@ def main_abobora():
     pet_the_piggy()
     harvest()
 
+def main_cactus():
+    # --- Parte de Plantar (Mantive igual) ---
+    mover.ir_pro_inicio()
+    for i in range(get_world_size()):
+        for j in range(get_world_size()):
+            if get_entity_type() != Entities.Cactus:
+                plant(Entities.Cactus)
+            move(North)
+        move(East)
+    
+    # --- Parte de Ordenar (Sua lógica corrigida) ---
+    organizado = False
+    
+    while not organizado:
+        # Reset obrigatório pro inicio a cada passada completa
+        mover.ir_pro_inicio()
+        organizado = True 
 
+        for x in range(get_world_size()):
+            for y in range(get_world_size()):
+                
+                # 1. Verifica LESTE (Protegendo pra não bater na parede)
+                if x < get_world_size() - 1:
+                    if measure(East) < measure():
+                        swap(East)
+                        organizado = False
+                        # NÃO use continue aqui. Deixe ele checar o Norte também.
+
+                # 2. Verifica NORTE (Protegendo pra não bater no teto)
+                if y < get_world_size() - 1:
+                    if measure(North) < measure():
+                        swap(North)
+                        organizado = False
+                
+                # 3. Movimento (Agora ele só sobe se não estiver no teto)
+                if y < get_world_size() - 1:
+                    move(North)
+            
+            # --- Correção Crítica ---
+            # Terminou a coluna (tá lá no topo). Vai pra direita...
+            if x < get_world_size() - 1:
+                move(East)
+                # ...E DESCE TUDO pro chão (y=0) pra começar a próxima!
+                # Sem isso, ele começa a próxima coluna lá de cima.
+                while get_pos_y() > 0:
+                    move(South)
+
+    harvest()

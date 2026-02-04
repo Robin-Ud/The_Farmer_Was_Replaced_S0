@@ -35,4 +35,10 @@ def farmar(cultura, meta):
     else:
         quick_print("Erro: Cultura nao existe na tabela!")
 
-
+def esperar_crescer_e_colher():
+    
+    if get_entity_type() != Entities.Dead_Pumpkin:
+        while not can_harvest() and get_entity_type() != None:
+            continue
+    if can_harvest():
+        harvest()
