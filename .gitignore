@@ -2,3 +2,5 @@ __pycache__/
 *.swp
 .DS_Store
 save.json
+pyrightconfig.json
+teste.py
