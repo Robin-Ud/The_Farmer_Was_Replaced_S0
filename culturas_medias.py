@@ -10,11 +10,15 @@ def main_girassois():
     mover.ir_pro_inicio()
     for i in range(get_world_size()):
         for j in range(get_world_size()):
-
+            
+            while get_entity_type() != None and not can_harvest():
+                continue
             if can_harvest():
                 can_harvest()
             basic.verificar_solo(Grounds.Soil)
             plant(Entities.Sunflower)
+            if measure() > 10:
+                use_item(Items.Water)
             petalas = measure()
             
             if petalas not in balde:
@@ -56,7 +60,7 @@ def main_abobora():
 
             if not can_harvest():
                 aboboras_podres.append((get_pos_x(), get_pos_y()))
-            
+                plant(Entities.Pumpkin)
             move(North)
         move(East)
 
@@ -67,7 +71,7 @@ def main_abobora():
                 aboboras_podres.remove(abobora)
             else:
                 plant(Entities.Pumpkin)
-
+    pet_the_piggy()
     harvest()
 
 

@@ -18,15 +18,20 @@ def farmar(cultura, meta):
         "madeira": (main_madeira, Items.Wood),
         "cenoura": (main_cenoura, Items.Carrot),
         "energia": (main_girassois, Items.Power),
-        "abobora": (main_girassois, Items.Pumpkin)
+        "abobora": (main_abobora, Items.Pumpkin)
     }
-
+    
+    usam_percorrer = ["trigo", "madeira", "cenoura"] 
+    
     # Verifica se o nome existe para não crashar
     if cultura in catalogo:
         funcao, item = catalogo[cultura]
         
         while num_items(item) < meta:
-            mover.percorrer_campo(funcao)
+            if cultura in usam_percorrer:
+                mover.percorrer_campo(funcao)
+            else:
+                funcao()
     else:
         quick_print("Erro: Cultura nao existe na tabela!")
 
