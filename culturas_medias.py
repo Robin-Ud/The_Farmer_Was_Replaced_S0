@@ -74,50 +74,70 @@ def main_abobora():
     harvest()
 
 def main_cactus():
-    # --- Parte de Plantar (Mantive igual) ---
+    
     mover.ir_pro_inicio()
+
+    #plantar organizando rola?
+
     for i in range(get_world_size()):
         for j in range(get_world_size()):
-            if get_entity_type() != Entities.Cactus:
-                plant(Entities.Cactus)
+
+            basic.esperar_crescer_e_colher()
+            basic.verificar_solo(Grounds.Soil)
+
+            plant(Entities.Cactus)
+
+            #if measure() < measure(South):
+             #   swap(South)
+
             move(North)
+
         move(East)
-    
-    # --- Parte de Ordenar (Sua lógica corrigida) ---
-    organizado = False
-    
-    while not organizado:
-        # Reset obrigatório pro inicio a cada passada completa
-        mover.ir_pro_inicio()
-        organizado = True 
 
-        for x in range(get_world_size()):
-            for y in range(get_world_size()):
-                
-                # 1. Verifica LESTE (Protegendo pra não bater na parede)
-                if x < get_world_size() - 1:
-                    if measure(East) < measure():
-                        swap(East)
-                        organizado = False
-                        # NÃO use continue aqui. Deixe ele checar o Norte também.
+    # organizando
+    for i in range(get_world_size()):
 
-                # 2. Verifica NORTE (Protegendo pra não bater no teto)
-                if y < get_world_size() - 1:
-                    if measure(North) < measure():
-                        swap(North)
-                        organizado = False
-                
-                # 3. Movimento (Agora ele só sobe se não estiver no teto)
-                if y < get_world_size() - 1:
-                    move(North)
-            
-            # --- Correção Crítica ---
-            # Terminou a coluna (tá lá no topo). Vai pra direita...
-            if x < get_world_size() - 1:
+        organizado = False
+
+        while organizado != True:
+            organizado = True
+            for j in range(get_world_size()):
+
+                if get_entity_type() != Entities.Cactus:
+                    if can_harvest():
+                        harvest()
+                    basic.verificar_solo(Grounds.Soil)
+                    plant(Entities.Cactus)
+
+                if measure() > measure(North) and get_pos_y() != get_world_size()-1:
+                    swap(North)
+                    organizado = False
+
+                if measure() < measure(South) and (get_pos_y() != 0):
+                    swap(South)
+                    organizado = False
+
+                move(North)
+
+        move(East)
+    for i in range(get_world_size()):
+
+        organizado = False
+
+        while organizado != True:
+            organizado = True
+            for j in range(get_world_size()):
+
+                if measure() > measure(East) and get_pos_x() != get_world_size()-1:
+                    swap(East)
+                    organizado = False
+
+                if measure() < measure(West) and (get_pos_x() != 0):
+                    swap(West)
+                    organizado = False
+
                 move(East)
-                # ...E DESCE TUDO pro chão (y=0) pra começar a próxima!
-                # Sem isso, ele começa a próxima coluna lá de cima.
-                while get_pos_y() > 0:
-                    move(South)
+
+        move(North)
 
     harvest()

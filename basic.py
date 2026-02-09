@@ -18,7 +18,8 @@ def farmar(cultura, meta):
         "madeira": (main_madeira, Items.Wood),
         "cenoura": (main_cenoura, Items.Carrot),
         "energia": (main_girassois, Items.Power),
-        "abobora": (main_abobora, Items.Pumpkin)
+        "abobora": (main_abobora, Items.Pumpkin),
+        "cacto": (main_cactus, Items.Cactus)
     }
     
     usam_percorrer = ["trigo", "madeira", "cenoura"] 
