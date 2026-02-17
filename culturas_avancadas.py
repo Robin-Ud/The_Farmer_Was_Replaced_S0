@@ -42,4 +42,4 @@ def main_dino():
             if not mover_seguro(West):
                 return
 
-main_dino()
+

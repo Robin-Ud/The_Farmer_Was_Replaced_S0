@@ -46,8 +46,7 @@ def main_abobora():
     for i in range(get_world_size()):
         for j in range(get_world_size()):
             
-            if can_harvest():
-                harvest()
+            basic.esperar_crescer_e_colher()
             basic.verificar_solo(Grounds.Soil)
             plant(Entities.Pumpkin)
 
