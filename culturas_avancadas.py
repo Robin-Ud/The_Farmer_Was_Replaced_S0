@@ -1,7 +1,9 @@
 import mover
+import basic
 
 def main_dino():
     mover.ir_pro_inicio()
+    clear()
     change_hat(Hats.Dinosaur_Hat)
     size = get_world_size() - 1
 
@@ -42,4 +44,20 @@ def main_dino():
             if not mover_seguro(West):
                 return
 
-
+def main_concorcio(meta):
+    basic.verificar_solo(Grounds.Grassland)
+    
+    while (num_items(Items.Hay) and num_items(Items.Wood) and num_items(Items.Carrot)) < meta:
+        if get_entity_type():
+            culturadesejada, (tx, ty) = get_companion()
+        quick_print(culturadesejada, tx, ty)
+        mover.para(tx, ty)
+        if culturadesejada == Entities.Carrot:
+            basic.verificar_solo(Grounds.Soil)
+        elif culturadesejada == (Entities.Tree or Entities.Bush):
+            basic.verificar_solo(Grounds.Grassland)
+            use_item(Items.Water)
+            
+        else:
+            basic.verificar_solo(Grounds.Grassland)
+        plant(culturadesejada)
